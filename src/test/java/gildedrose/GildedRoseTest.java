@@ -6,121 +6,177 @@ import static org.junit.Assert.assertEquals;
 
 public class GildedRoseTest {
 
+    private GildedRose gildedRose;
+
     @Test
     public void theQualityOfANormalItemDecreasesByOneAfterOneUpdate() {
-        Item normalItem = new Item("normal", 5, 5);
-        updateGildedRose(normalItem);
-        assertEquals(4, normalItem.quality);
+        gildedRose = createGildedRose(createItem("normal", 5, 5));
+
+        gildedRose.updateQuality();
+
+        assertEquals(4, getItemQuality());
     }
+
 
     @Test
     public void theSellInValueOfANormalItemDecresesByOneAfterOneUpdate() {
-        Item normalItem = new Item("normal", 5, 5);
-        updateGildedRose(normalItem);
-        assertEquals(4, normalItem.sellIn);
+        gildedRose = createGildedRose(createItem("normal", 5, 5));
+
+        gildedRose.updateQuality();
+
+        assertEquals(4, getItemSellIn());
+    }
+
+
+    @Test
+    public void theSellInIsNegativeAfterItHasPassed() {
+        gildedRose = createGildedRose(createItem("normal", 0, 5));
+
+        gildedRose.updateQuality();
+
+        assertEquals(-1, getItemSellIn());
     }
 
     @Test
     public void whenTheSellInValueIsZeroQualityOfANormalItemDecreasesByTwo() {
-        Item normalItem = new Item("normal", 0, 5);
-        updateGildedRose(normalItem);
-        assertEquals(3, normalItem.quality);
+        gildedRose = createGildedRose(createItem("normal", 0, 5));
+
+        gildedRose.updateQuality();
+
+        assertEquals(3, getItemQuality());
     }
 
     @Test
     public void theQualityOfANormalItemIsNeverNegative() {
-        Item normalItem = new Item("normal", 0, 0);
-        updateGildedRose(normalItem);
-        assertEquals(0, normalItem.quality);
+        gildedRose = createGildedRose(createItem("normal", 0, 0));
+
+        gildedRose.updateQuality();
+
+        assertEquals(0, getItemQuality());
     }
 
     @Test
     public void theQualityOfBrieIncreasesAfterOneUpdate() {
-        Item brie = new Item("Aged Brie", 10, 3);
-        updateGildedRose(brie);
-        assertEquals(4, brie.quality);
+        gildedRose = createGildedRose(createItem("Aged Brie", 10, 3));
+
+        gildedRose.updateQuality();
+
+        assertEquals(4, getItemQuality());
     }
 
     @Test
     public void theQualityOfBrieIncreasesByTwoAfterSellInDate() {
-        Item brie = new Item("Aged Brie", 0, 3);
-        updateGildedRose(brie);
-        assertEquals(5, brie.quality);
+        gildedRose = createGildedRose(createItem("Aged Brie", 0, 3));
+
+        gildedRose.updateQuality();
+
+        assertEquals(5, getItemQuality());
     }
 
     @Test
     public void theQualityOfBrieCannotGoOverFifty() {
-        Item brie = new Item("Aged Brie", 0, 50);
-        updateGildedRose(brie);
-        assertEquals(50, brie.quality);
+        gildedRose = createGildedRose(createItem("Aged Brie", 0, 50));
+
+        gildedRose.updateQuality();
+
+        assertEquals(50, getItemQuality());
     }
 
     @Test
     public void theSellInDateOfBrieDecreasesAfterAnUpdate() {
-        Item brie = new Item("Aged Brie", 4, 5);
-        updateGildedRose(brie);
-        assertEquals(3, brie.sellIn);
+        gildedRose = createGildedRose(createItem("Aged Brie", 4, 5));
+
+        gildedRose.updateQuality();
+
+        assertEquals(3, getItemSellIn());
     }
 
     @Test
     public void backstagePassesIncreaseInValueByOneWhenSellInIsOverTenDays() {
-        Item passes = new Item("Backstage passes to a TAFKAL80ETC concert", 15, 5);
-        updateGildedRose(passes);
-        assertEquals(6, passes.quality);
+        gildedRose = createGildedRose(createItem("Backstage passes to a TAFKAL80ETC concert", 15, 5));
+
+        gildedRose.updateQuality();
+
+        assertEquals(6, getItemQuality());
     }
 
     @Test
     public void backstagePassesIncreaseInValueByTwoWhenSellInIsUnderTenDays() {
-        Item passes = new Item("Backstage passes to a TAFKAL80ETC concert", 9, 5);
-        updateGildedRose(passes);
-        assertEquals(7, passes.quality);
+        gildedRose = createGildedRose(createItem("Backstage passes to a TAFKAL80ETC concert", 9, 5));
+
+        gildedRose.updateQuality();
+
+        assertEquals(7, getItemQuality());
     }
 
     @Test
     public void backstagePassesIncreaseInValueByThreeWhenSellInIsUnderFiveDays() {
-        Item passes = new Item("Backstage passes to a TAFKAL80ETC concert", 4, 5);
-        updateGildedRose(passes);
-        assertEquals(8, passes.quality);
+        gildedRose = createGildedRose(createItem("Backstage passes to a TAFKAL80ETC concert", 4, 5));
+
+        gildedRose.updateQuality();
+
+        assertEquals(8, getItemQuality());
     }
 
     @Test
     public void theValueOfBackstagePassesCannotRiseAboveFifty() {
-        Item passes = new Item("Backstage passes to a TAFKAL80ETC concert", 1, 50);
-        updateGildedRose(passes);
-        assertEquals(50, passes.quality);
+        gildedRose = createGildedRose(createItem("Backstage passes to a TAFKAL80ETC concert", 1, 50));
+
+        gildedRose.updateQuality();
+
+        assertEquals(50, getItemQuality());
     }
 
     @Test
     public void whenSellInHasPassedQualityOfBackstagePassesIsZero() {
-        Item passes = new Item("Backstage passes to a TAFKAL80ETC concert", 0, 50);
-        updateGildedRose(passes);
-        assertEquals(0, passes.quality);
+        gildedRose = createGildedRose(createItem("Backstage passes to a TAFKAL80ETC concert", 0, 50));
+
+        gildedRose.updateQuality();
+
+        assertEquals(0, getItemQuality());
     }
 
     @Test
     public void theSellInValueDecreasesAfterAnUpdate() {
-        Item passes = new Item("Backstage passes to a TAFKAL80ETC concert", 1, 2);
-        updateGildedRose(passes);
-        assertEquals(0, passes.sellIn);
+        gildedRose = createGildedRose(createItem("Backstage passes to a TAFKAL80ETC concert", 1, 2));
+
+        gildedRose.updateQuality();
+
+        assertEquals(0, getItemSellIn());
     }
 
     @Test
     public void theHandOfSulfurasDoesNotDecreaseInQuality() {
-        Item hand = new Item("Sulfuras, Hand of Ragnaros", 2, 80);
-        updateGildedRose(hand);
-        assertEquals(80, hand.quality);
+        gildedRose = createGildedRose(createItem("Sulfuras, Hand of Ragnaros", 2, 80));
+
+        gildedRose.updateQuality();
+
+        assertEquals(80, getItemQuality());
     }
 
     @Test
     public void theHandOfSulfurasSellInDateDoesNotDecrease() {
-        Item hand = new Item("Sulfuras, Hand of Ragnaros", 2, 80);
-        updateGildedRose(hand);
-        assertEquals(2, hand.sellIn);
+        gildedRose = createGildedRose(createItem("Sulfuras, Hand of Ragnaros", 2, 80));
+
+        gildedRose.updateQuality();
+
+        assertEquals(2, getItemQuality());
     }
 
-    private void updateGildedRose(Item item) {
+    private GildedRose createGildedRose(Item item) {
         Item[] items = {item};
-        GildedRose gildedRose = new GildedRose(items);
-        gildedRose.updateQuality();
+        return new GildedRose(items);
+    }
+
+    private Item createItem(String name, int sellIn, int quality) {
+        return new Item(name, sellIn, quality);
+    }
+
+    private int getItemQuality() {
+        return gildedRose.items[0].quality;
+    }
+
+    private int getItemSellIn() {
+        return gildedRose.items[0].sellIn;
     }
 }
