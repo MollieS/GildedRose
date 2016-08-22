@@ -35,7 +35,7 @@ public class PassesRuleTest {
 
     @Test
     public void whenSellInHasPassedQualityOfBackstagePassesIsZero() {
-        item = createItem(PASSES.title, 0, 5);
+        item = createItem(PASSES.title, -1, 5);
 
         passesRule.update(item);
 

@@ -4,11 +4,12 @@ import gildedrose.Item;
 import gildedrose.ItemTypes;
 import gildedrose.Rules;
 
-public class ConjuredRule implements Rules {
+public class ConjuredRule extends CommonRules implements Rules {
 
     public void update(Item item) {
         decreaseQuality(item);
         passedSellInDate(item);
+        super.checkMinimumQuality(item);
     }
 
     public boolean appliesTo(Item item) {
