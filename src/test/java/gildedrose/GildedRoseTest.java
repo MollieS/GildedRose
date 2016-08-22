@@ -200,7 +200,7 @@ public class GildedRoseTest {
 
     private GildedRose createGildedRose(Item item) {
         Item[] items = {item};
-        Rules[] rules = new Rules[]{new ImproveWithAgeRule(), new DeterioratesWithAgeRule(), new BrieRule(), new PassesRule(), new ConjuredRule()};
+        Rules[] rules = new Rules[]{new BrieRule(), new DeterioratesWithAgeRule(), new ImproveWithAgeRule(), new BackstagePassesRule(), new ConjuredRule()};
         return new GildedRose(items, rules);
     }
 

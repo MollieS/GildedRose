@@ -4,7 +4,7 @@ import gildedrose.Item;
 import gildedrose.ItemTypes;
 import gildedrose.Rules;
 
-public class PassesRule extends CommonRules implements Rules {
+public class BackstagePassesRule extends CommonRules implements Rules {
 
     private int tenDays = 10;
     private int fiveDays = 5;
