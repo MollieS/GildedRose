@@ -9,6 +9,15 @@ repositories {
     mavenCentral()
 }
 
+task(run, dependsOn: 'classes', type: JavaExec) {
+    main = "gildedrose.Main"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+run {
+    standardInput = System.in
 }
