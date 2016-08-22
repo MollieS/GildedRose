@@ -1,54 +1,21 @@
 package gildedrose;
 
+import gildedrose.rules.BrieRule;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static gildedrose.ItemTestHelper.createItem;
+import static gildedrose.ItemTestHelper.getItemQuality;
+import static gildedrose.ItemTypes.*;
+import static org.junit.Assert.*;
 
 public class BrieRuleTest {
 
     private BrieRule brieRule = new BrieRule();
-
-    @Test
-    public void theQualityOfBrieIncreasesAfterOneUpdate() {
-        Item item = createItem("Aged Brie", 10, 3);
-
-        brieRule.update(item);
-
-        assertEquals(4, item.quality);
-    }
-
-    @Test
-    public void theQualityOfBrieIncreasesByTwoAfterSellInDate() {
-        Item item = createItem("Aged Brie", 0, 3);
-
-        brieRule.update(item);
-
-        assertEquals(5, item.quality);
-    }
-
-    @Test
-    public void theQualityOfBrieCannotGoOverFifty() {
-        Item item = createItem("Aged Brie", 0, 50);
-
-        brieRule.update(item);
-
-        assertEquals(50, item.quality);
-    }
-
-    @Test
-    public void theSellInDateOfBrieDecreasesAfterAnUpdate() {
-        Item item = createItem("Aged Brie", 4, 5);
-
-        brieRule.update(item);
-
-        assertEquals(3, item.sellIn);
-    }
+    private Item item;
 
     @Test
     public void theUpdateIsOnlyAppliedToAgedBrie() {
-        Item item = createItem("Aged Brie", 4, 5);
+        item = createItem(BRIE.title, 4, 5);
 
         boolean isApplicable = brieRule.appliesTo(item);
 
@@ -57,14 +24,19 @@ public class BrieRuleTest {
 
     @Test
     public void theUpdateIsNotAppliedToAnotherItem() {
-        Item item = createItem("Not Brie", 4, 5);
+        item = createItem("Not Brie", 4, 5);
 
         boolean isApplicable = brieRule.appliesTo(item);
 
         assertFalse(isApplicable);
     }
 
-    private Item createItem(String name, int sellIn, int quality) {
-        return new Item(name, sellIn, quality);
+    @Test
+    public void theQualityOfBrieIncreasesAfterSellInDateHasPassed() {
+        item = createItem(BRIE.title, 0, 3);
+
+        brieRule.update(item);
+
+        assertEquals(4, getItemQuality(item));
     }
 }

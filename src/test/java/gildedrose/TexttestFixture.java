@@ -1,5 +1,9 @@
 package gildedrose;
 
+import gildedrose.rules.BrieRule;
+import gildedrose.rules.ConjuredRule;
+import gildedrose.rules.PassesRule;
+
 public class TexttestFixture {
     public static void main(String[] args) {
         System.out.println("OMGHAI!");
@@ -16,7 +20,7 @@ public class TexttestFixture {
                 // this conjured item does not work properly yet
                 new Item("Conjured Mana Cake", 3, 6) };
 
-        Rules[] rules = new Rules[]{new BrieRule(), new NormalRule(), new PassesRule(), new ConjuredRule()};
+        Rules[] rules = new Rules[]{new BrieRule(), new PassesRule(), new ConjuredRule()};
         GildedRose app = new GildedRose(items, rules);
 
         int days = 2;

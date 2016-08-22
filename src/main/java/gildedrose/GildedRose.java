@@ -4,7 +4,7 @@ package gildedrose;
 public class GildedRose {
 
     private final Rules[] rules;
-    Item[] items;
+    public final Item[] items;
 
     public GildedRose(Item[] items, Rules[] rules) {
         this.rules = rules;
@@ -13,11 +13,19 @@ public class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            for (Rules rule : rules) {
-                if (rule.appliesTo(item)) {
-                    rule.update(item);
-                }
-            }
+            updateItem(item);
+        }
+    }
+
+    private void updateItem(Item item) {
+        for (Rules rule : rules) {
+            applyRule(item, rule);
+        }
+    }
+
+    private void applyRule(Item item, Rules rule) {
+        if (rule.appliesTo(item)) {
+            rule.update(item);
         }
     }
 }
