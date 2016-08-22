@@ -8,6 +8,10 @@ public class ConjuredRule implements Rules {
         nonNegativeQuality(item);
     }
 
+    public boolean appliesTo(Item item) {
+        return item.name.equals(ItemTypes.CONJURED.title);
+    }
+
     private void nonNegativeQuality(Item item) {
         if (item.quality <= 0) {
             item.quality = 0;

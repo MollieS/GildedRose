@@ -8,6 +8,10 @@ public class BrieRule implements Rules {
         checkForMaximumQuality(item);
     }
 
+    public boolean appliesTo(Item item) {
+        return item.name.equals(ItemTypes.BRIE.title);
+    }
+
     private void brieUpdate(Item item) {
         item.quality++;
         item.sellIn--;

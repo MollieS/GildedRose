@@ -3,6 +3,8 @@ package gildedrose;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class BrieRuleTest {
 
@@ -42,6 +44,24 @@ public class BrieRuleTest {
         brieRule.update(item);
 
         assertEquals(3, item.sellIn);
+    }
+
+    @Test
+    public void theUpdateIsOnlyAppliedToAgedBrie() {
+        Item item = createItem("Aged Brie", 4, 5);
+
+        boolean isApplicable = brieRule.appliesTo(item);
+
+        assertTrue(isApplicable);
+    }
+
+    @Test
+    public void theUpdateIsNotAppliedToAnotherItem() {
+        Item item = createItem("Not Brie", 4, 5);
+
+        boolean isApplicable = brieRule.appliesTo(item);
+
+        assertFalse(isApplicable);
     }
 
     private Item createItem(String name, int sellIn, int quality) {

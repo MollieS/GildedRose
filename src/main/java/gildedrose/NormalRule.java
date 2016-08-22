@@ -8,6 +8,15 @@ public class NormalRule implements Rules {
         nonNegativeQuality(item);
     }
 
+    public boolean appliesTo(Item item) {
+        for (ItemTypes itemTypes : ItemTypes.values()) {
+            if (item.name.equals(itemTypes.title)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void itemUpdate(Item item) {
         item.quality--;
         item.sellIn--;

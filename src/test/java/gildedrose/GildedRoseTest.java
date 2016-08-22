@@ -163,7 +163,7 @@ public class GildedRoseTest {
 
     @Test
     public void theConjuredItemQualityDecreaseTwiceAsFastAsNormal() {
-        gildedRose = createGildedRose(createItem("Conjured Item", 2, 20));
+        gildedRose = createGildedRose(createItem("Conjured Mana Cake", 2, 20));
 
         gildedRose.updateQuality();
 
@@ -172,7 +172,7 @@ public class GildedRoseTest {
 
     @Test
     public void theConjuredItemSellInDateDecreasesAfterAnUpdate() {
-        gildedRose = createGildedRose(createItem("Conjured Item", 2, 20));
+        gildedRose = createGildedRose(createItem("Conjured Mana Cake", 2, 20));
 
         gildedRose.updateQuality();
 
@@ -181,7 +181,7 @@ public class GildedRoseTest {
 
     @Test
     public void theConjuredItemDecreasesInQualityByFourAfterPassedSellInDate() {
-        gildedRose = createGildedRose(createItem("Conjured Item", -2, 20));
+        gildedRose = createGildedRose(createItem("Conjured Mana Cake", -2, 20));
 
         gildedRose.updateQuality();
 
@@ -190,7 +190,7 @@ public class GildedRoseTest {
 
     @Test
     public void theConjuredItemQualityIsNeverNegative() {
-        gildedRose = createGildedRose(createItem("Conjured Item", -2, 0));
+        gildedRose = createGildedRose(createItem("Conjured Mana Cake", -2, 0));
 
         gildedRose.updateQuality();
 
@@ -199,7 +199,8 @@ public class GildedRoseTest {
 
     private GildedRose createGildedRose(Item item) {
         Item[] items = {item};
-        return new GildedRose(items, new BrieRule(), new NormalRule(), new PassesRule(), new ConjuredRule());
+        Rules[] rules = new Rules[]{new BrieRule(), new NormalRule(), new PassesRule(), new ConjuredRule()};
+        return new GildedRose(items, rules);
     }
 
     private Item createItem(String name, int sellIn, int quality) {

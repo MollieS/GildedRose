@@ -1,13 +1,17 @@
 package gildedrose;
 
 public class PassesRule implements Rules {
+
     public void update(Item item) {
         passesUpdate(item);
         tenDaysTillSellIn(item);
         fiveDaysTillSellIn(item);
         maximumQualityCheck(item);
         sellInDatePassed(item);
+    }
 
+    public boolean appliesTo(Item item) {
+        return item.name.equals(ItemTypes.PASSES.title);
     }
 
     private void sellInDatePassed(Item item) {

@@ -3,16 +3,17 @@ package gildedrose;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ConjuredRuleTest {
 
     private Item item;
+    private ConjuredRule conjuredRule = new ConjuredRule();
 
     @Test
     public void theConjuredItemQualityDecreaseTwiceAsFastAsNormal() {
-        item = createItem("Conjured Item", 2, 20);
-
-        ConjuredRule conjuredRule = new ConjuredRule();
+        item = createItem("Conjured Mana Cake", 2, 20);
 
         conjuredRule.update(item);
 
@@ -21,9 +22,7 @@ public class ConjuredRuleTest {
 
     @Test
     public void theConjuredItemSellInDateDecreasesAfterAnUpdate() {
-        item = createItem("Conjured Item", 2, 20);
-
-        ConjuredRule conjuredRule = new ConjuredRule();
+        item = createItem("Conjured Mana Cake", 2, 20);
 
         conjuredRule.update(item);
 
@@ -32,9 +31,7 @@ public class ConjuredRuleTest {
 
     @Test
     public void theConjuredItemDecreasesInQualityByFourAfterPassedSellInDate() {
-        item = createItem("Conjured Item", -2, 20);
-
-        ConjuredRule conjuredRule = new ConjuredRule();
+        item = createItem("Conjured Mana Cake", -2, 20);
 
         conjuredRule.update(item);
 
@@ -43,13 +40,29 @@ public class ConjuredRuleTest {
 
     @Test
     public void theConjuredItemQualityIsNeverNegative() {
-        item = createItem("Conjured Item", -2, 0);
-
-        ConjuredRule conjuredRule = new ConjuredRule();
+        item = createItem("Conjured Mana Cake", -2, 0);
 
         conjuredRule.update(item);
 
         assertEquals(0, getItemQuality());
+    }
+
+    @Test
+    public void theRuleOnlyAppliesToAConjuredItem() {
+        item = createItem("Conjured Mana Cake", -2, 0);
+
+        boolean isApplicable = conjuredRule.appliesTo(item);
+
+        assertTrue(isApplicable);
+    }
+
+    @Test
+    public void theRuleDoesNotApplyToOtherItems() {
+        item = createItem("Not Cake", -2, 0);
+
+        boolean isApplicable = conjuredRule.appliesTo(item);
+
+        assertFalse(isApplicable);
     }
 
     private Item createItem(String name, int sellIn, int quality) {
