@@ -1,61 +1,33 @@
 package gildedrose;
 
+
 public class GildedRose {
+
+    private final Rules passesRule;
+    private final Rules conjuredRule;
+    private final Rules brieRule;
+    private final Rules normalRule;
     Item[] items;
 
-    public GildedRose(Item[] items) {
+    public GildedRose(Item[] items, Rules brieRule, Rules normalRule, Rules passesRule, Rules conjuredRule) {
+        this.brieRule = brieRule;
+        this.conjuredRule = conjuredRule;
+        this.normalRule = normalRule;
+        this.passesRule = passesRule;
         this.items = items;
     }
 
     public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            if (!items[i].name.equals("Aged Brie")
-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                        items[i].quality = items[i].quality - 1;
-                    }
-                }
+        for (Item item : items) {
+            if (item.name.equals("Aged Brie")) {
+                brieRule.update(item);
+            } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                passesRule.update(item);
+            } else if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            } else if (item.name.equals("Conjured Item")) {
+                conjuredRule.update(item);
             } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
-
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].sellIn = items[i].sellIn - 1;
-            }
-
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Aged Brie")) {
-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                                items[i].quality = items[i].quality - 1;
-                            }
-                        }
-                    } else {
-                        items[i].quality = items[i].quality - items[i].quality;
-                    }
-                } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
-                    }
-                }
+                normalRule.update(item);
             }
         }
     }

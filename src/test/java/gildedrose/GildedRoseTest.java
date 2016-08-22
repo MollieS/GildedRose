@@ -17,7 +17,6 @@ public class GildedRoseTest {
         assertEquals(4, getItemQuality());
     }
 
-
     @Test
     public void theSellInValueOfANormalItemDecresesByOneAfterOneUpdate() {
         gildedRose = createGildedRose(createItem("normal", 5, 5));
@@ -26,7 +25,6 @@ public class GildedRoseTest {
 
         assertEquals(4, getItemSellIn());
     }
-
 
     @Test
     public void theSellInIsNegativeAfterItHasPassed() {
@@ -160,12 +158,48 @@ public class GildedRoseTest {
 
         gildedRose.updateQuality();
 
-        assertEquals(2, getItemQuality());
+        assertEquals(2, getItemSellIn());
+    }
+
+    @Test
+    public void theConjuredItemQualityDecreaseTwiceAsFastAsNormal() {
+        gildedRose = createGildedRose(createItem("Conjured Item", 2, 20));
+
+        gildedRose.updateQuality();
+
+        assertEquals(18, getItemQuality());
+    }
+
+    @Test
+    public void theConjuredItemSellInDateDecreasesAfterAnUpdate() {
+        gildedRose = createGildedRose(createItem("Conjured Item", 2, 20));
+
+        gildedRose.updateQuality();
+
+        assertEquals(1, getItemSellIn());
+    }
+
+    @Test
+    public void theConjuredItemDecreasesInQualityByFourAfterPassedSellInDate() {
+        gildedRose = createGildedRose(createItem("Conjured Item", -2, 20));
+
+        gildedRose.updateQuality();
+
+        assertEquals(16, getItemQuality());
+    }
+
+    @Test
+    public void theConjuredItemQualityIsNeverNegative() {
+        gildedRose = createGildedRose(createItem("Conjured Item", -2, 0));
+
+        gildedRose.updateQuality();
+
+        assertEquals(0, getItemQuality());
     }
 
     private GildedRose createGildedRose(Item item) {
         Item[] items = {item};
-        return new GildedRose(items);
+        return new GildedRose(items, new BrieRule(), new NormalRule(), new PassesRule(), new ConjuredRule());
     }
 
     private Item createItem(String name, int sellIn, int quality) {
