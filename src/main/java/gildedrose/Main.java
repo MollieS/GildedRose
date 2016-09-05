@@ -1,13 +1,10 @@
 package gildedrose;
 
-import gildedrose.rules.BrieRule;
-import gildedrose.rules.ConjuredRule;
-import gildedrose.rules.PassesRule;
+import gildedrose.rules.*;
 
-public class TexttestFixture {
-    public static void main(String[] args) {
-        System.out.println("OMGHAI!");
+public class Main {
 
+    public static void main(String...args) {
         Item[] items = new Item[] {
                 new Item("+5 Dexterity Vest", 10, 20), //
                 new Item("Aged Brie", 2, 0), //
@@ -17,10 +14,16 @@ public class TexttestFixture {
                 new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
-                // this conjured item does not work properly yet
                 new Item("Conjured Mana Cake", 3, 6) };
 
-        Rules[] rules = new Rules[]{new BrieRule(), new PassesRule(), new ConjuredRule()};
+        Rules[] rules = new Rules[]{
+                new BrieRule(),
+                new ConjuredRule(),
+                new DeterioratesWithAgeRule(),
+                new ImproveWithAgeRule(),
+                new BackstagePassesRule()
+        };
+
         GildedRose app = new GildedRose(items, rules);
 
         int days = 2;

@@ -4,7 +4,7 @@ import gildedrose.Item;
 import gildedrose.ItemTypes;
 import gildedrose.Rules;
 
-public class PassesRule implements Rules {
+public class BackstagePassesRule extends CommonRules implements Rules {
 
     private int tenDays = 10;
     private int fiveDays = 5;
@@ -14,6 +14,7 @@ public class PassesRule implements Rules {
         tenDaysTillSellIn(item);
         fiveDaysTillSellIn(item);
         sellInDatePassed(item);
+        super.checkMaximumQuality(item);
     }
 
     public boolean appliesTo(Item item) {
@@ -21,7 +22,7 @@ public class PassesRule implements Rules {
     }
 
     private void sellInDatePassed(Item item) {
-        if (item.sellIn <= concertDay) {
+        if (item.sellIn < concertDay) {
             item.quality = 0;
         }
     }

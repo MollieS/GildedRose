@@ -6,13 +6,14 @@ import gildedrose.Rules;
 
 import static gildedrose.ItemTypes.*;
 
-public class DeterioratesWithAgeRule implements Rules {
+public class DeterioratesWithAgeRule extends CommonRules implements Rules {
 
     public void update(Item item) {
         decreaseQuality(item);
         if (sellInDateHasPassed(item)) {
             decreaseQuality(item);
         }
+        super.update(item);
     }
 
     private void decreaseQuality(Item item) {

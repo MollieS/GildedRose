@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static gildedrose.ItemTestHelper.createItem;
 import static gildedrose.ItemTestHelper.getItemQuality;
+import static gildedrose.ItemTestHelper.getItemSellIn;
 import static gildedrose.ItemTypes.BRIE;
 import static gildedrose.ItemTypes.PASSES;
 import static gildedrose.ItemTypes.SULFURAS;
@@ -59,6 +60,20 @@ public class ImproveWithAgeRuleTest {
         improveWithAgeRule.update(item);
 
         assertEquals(5, getItemQuality(item));
+    }
+
+    @Test
+    public void decreasesSellInDate() {
+        Item item = createItem(PASSES.title, 4, 4);
+
+        improveWithAgeRule.update(item);
+
+        assertEquals(3, getItemSellIn(item));
+    }
+
+    @Test
+    public void doesNotAllowQualityOverFifty() {
+
     }
 
 }
